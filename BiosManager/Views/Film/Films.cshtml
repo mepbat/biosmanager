@@ -1,0 +1,54 @@
+﻿@model List<BiosManager.Models.Film>
+@Styles.Render("~/Content/Site.css")
+
+@{
+ ViewBag.Title = "Films";
+}
+<!DOCTYPE HTML>
+<h2>Films</h2>
+
+@using (Html.BeginForm())
+{
+ <input class="form-control" id="myInput" type="text" placeholder="Search here" />
+ <br />
+ <table style="width: 100%">
+  <thead>
+   <tr>
+    <th>Naam</th>
+    <th>Jaar</th>
+    <th>Genre</th>
+    <th>Rating</th>
+   </tr>
+  </thead>
+  <tbody id="myTable">
+   @foreach (var item in Model)
+   {
+   <tr>
+    <td>
+     @Html.DisplayFor(model => item.Naam) &nbsp;
+    </td>
+    <td>
+     @Html.DisplayFor(model => item.Jaar)&nbsp;
+    </td>
+    <td>
+     @Html.DisplayFor(model => item.Genres)&nbsp;
+    </td>
+    <td>
+     @Html.DisplayFor(model => item.Rating)&nbsp;
+    </td>
+    <td>
+     @using (Html.BeginForm("Films", "Film", FormMethod.Post))
+	{
+     @Html.AntiForgeryToken()
+     <button>@Html.ActionLink("Details", "Details", "Film", new { id = item.Id }, null)</button>
+	}
+    </td>
+   </tr>
+
+   }
+  </tbody>
+ </table>
+}
+@Scripts.Render("~/Scripts/Modal.js")
+@Scripts.Render("~/Scripts/Filter.js")
+

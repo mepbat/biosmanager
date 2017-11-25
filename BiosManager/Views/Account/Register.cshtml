@@ -1,0 +1,39 @@
+﻿@model BiosManager.Models.Account
+
+@{
+ ViewBag.Title = "Register";
+}
+<!DOCTYPE html>
+<div class="col-md-offset-2 col-md-10">
+	<h2>Register</h2>
+</div>
+@Styles.Render("~/Content/Site.css")
+@using (Html.BeginForm("Register", "Account"))
+{
+ @Html.AntiForgeryToken()
+
+ <div class="form-horizontal">
+  <hr />
+  <div class="form-group">
+   @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+   <div class="col-md-10">
+    <p>@ViewBag.Message</p>
+    @Html.TextBoxFor(model => model.Email, new { @class = "boo"})
+   </div>
+  </div>
+
+  <div class="form-group">
+   @Html.LabelFor(model => model.Wachtwoord, htmlAttributes: new { @class = "control-label col-md-2" })
+   <div class="col-md-10">
+    <p>@ViewBag.Message2</p>
+    @Html.TextBoxFor(model => model.Wachtwoord , new {@class = "boo" , Type = "password"  })
+   </div>
+  </div>
+  <p>@ViewBag.Message3</p>
+  <div class="form-group">
+   <div class="col-md-offset-2 col-md-10">
+    <input type="submit" value="Register" class="btn btn-default" />
+   </div>
+  </div>
+ </div>
+}

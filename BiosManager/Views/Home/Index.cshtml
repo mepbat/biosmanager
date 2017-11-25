@@ -1,0 +1,21 @@
+﻿@{
+ ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<div class="col-md-offset-2 col-md-10">
+ <h2>Home</h2>
+</div>
+@Styles.Render("~/Content/Site.css")
+@using (Html.BeginForm("Index", "Home"))
+{
+ <div class="banner">
+  <div class="row">
+   <div class="col-lg-8 col-lg-offset-2">
+    <h1>Index</h1>
+    <p>
+     Welkom bij de Bios Manager.
+    </p>
+   </div>
+  </div>
+ </div>
+}

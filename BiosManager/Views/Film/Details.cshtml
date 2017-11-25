@@ -1,0 +1,26 @@
+﻿@model BiosManager.Models.Film
+
+@{
+ ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+@using (Html.BeginForm())
+{
+ @Html.ActionLink("Reserveer", "Reservering", "Reservering")
+
+ <h4>ID: @Html.DisplayFor(model => model.Id)</h4>
+ <h4>Naam: @Html.DisplayFor(model => model.Naam)</h4>
+ <h4>ActionsList: @Html.DisplayFor(model => model.ActionsList)</h4>
+ <h4>Beschrijving: @Html.DisplayFor(model => model.Beschrijving)</h4>
+ <h4>Genres: @Html.DisplayFor(model => model.Genres)</h4>
+ <h4>Image: @Html.DisplayFor(model => model.Image)</h4>
+ <h4>Jaar: @Html.DisplayFor(model => model.Jaar)</h4>
+ <h4>Lengte: @Html.DisplayFor(model => model.Lengte)</h4>
+ <h4>Rating: @Html.DisplayFor(model => model.Rating)</h4>
+
+
+
+
+}
+
