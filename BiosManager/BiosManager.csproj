@@ -187,6 +187,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BigViewModel.cs" />
     <Compile Include="Helpers\Imdb.cs" />
     <Compile Include="Models\Enums\Genres.cs" />
     <Compile Include="Repositories\AccountRepository.cs" />
@@ -247,12 +248,10 @@
     <Content Include="Views\Film\Films.cshtml" />
     <Content Include="Views\Film\Details.cshtml" />
     <Content Include="Views\Reservering\Reservering.cshtml" />
+    <Content Include="Views\Voorstelling\Voorstelling.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Stoel\" />
-    <Folder Include="Views\Voorstelling\" />
-    <Folder Include="Views\Zaal\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

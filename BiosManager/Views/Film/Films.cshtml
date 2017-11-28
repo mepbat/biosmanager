@@ -1,5 +1,7 @@
 ﻿@model List<BiosManager.Models.Film>
 @Styles.Render("~/Content/Site.css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/Scripts/Filter.js")
 
 @{
  ViewBag.Title = "Films";
@@ -11,7 +13,7 @@
 {
  <input class="form-control" id="myInput" type="text" placeholder="Search here" />
  <br />
- <table style="width: 100%">
+ <table id="myTable" style="width: 100%">
   <thead>
    <tr>
     <th>Naam</th>
@@ -49,6 +51,3 @@
   </tbody>
  </table>
 }
-@Scripts.Render("~/Scripts/Modal.js")
-@Scripts.Render("~/Scripts/Filter.js")
-

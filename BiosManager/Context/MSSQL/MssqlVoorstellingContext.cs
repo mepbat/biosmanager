@@ -11,18 +11,25 @@ namespace BiosManager.Context.MSSQL
  {
   public void Insert(Voorstelling voorstelling)
   {
-   using (SqlConnection conn = new SqlConnection(ConnectionString))
+   try
    {
-    conn.Open();
-    string query = "INSERT INTO dbo.voorstelling (naam, starttijd, eindtijd) VALUES (@naam, @starttijd, @eindtijd)";
-    SqlCommand cmd = new SqlCommand(query, conn);
+    using (SqlConnection conn = new SqlConnection(ConnectionString))
+    {
+	string query = "INSERT INTO dbo.voorstelling (zaal_ID, begintijd, eindtijd) VALUES (@zaal, @begintijd, @eindtijd)";
+	SqlCommand cmd = new SqlCommand(query);
 
-    cmd.Parameters.AddWithValue("@naam", voorstelling.Naam);
-    cmd.Parameters.AddWithValue("@starttijd", voorstelling.Starttijd);
-    cmd.Parameters.AddWithValue("@eindtijd", voorstelling.Eindtijd);
-    cmd.ExecuteNonQuery();
-    conn.Close();
+	cmd.Parameters.AddWithValue("@zaal", voorstelling.Zaal);
+	cmd.Parameters.AddWithValue("@begintijd", voorstelling.Starttijd);
+	cmd.Parameters.AddWithValue("@eindtijd", voorstelling.Eindtijd);
+	Database.Database.RunNonQuery(cmd);
+    }
    }
+   catch (Exception e)
+   {
+    Console.WriteLine(e);
+    throw;
+   }
+
   }
 
   public List<Voorstelling> Select()

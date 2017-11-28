@@ -10,7 +10,9 @@ namespace BiosManager.Models
  public class Voorstelling : IQuery
  {
   public int Id { get; set; }
-  public string Naam { get; set; }
+  public int Zaal { get; set; }
+  public int FilmId { get; set; }
+  public Film Film { get; set; }
   public DateTime Starttijd { get; set; }
   public DateTime Eindtijd { get; set; }
   public string Query { get; set; }
@@ -23,11 +25,11 @@ namespace BiosManager.Models
 
   public void Parse(SqlDataReader reader)
   {
-   Id = reader.GetInt32(reader.GetOrdinal("Id"));
-   Naam = reader.GetString(reader.GetOrdinal("naam"));
-   Starttijd = reader.GetDateTime(reader.GetOrdinal("starttijd"));
+   Id = reader.GetInt32(reader.GetOrdinal("ID"));
+   Zaal = reader.GetInt32(reader.GetOrdinal("zaal_ID"));
+   FilmId = reader.GetInt32(reader.GetOrdinal("film_ID"));
+   Starttijd = reader.GetDateTime(reader.GetOrdinal("begintijd"));
    Eindtijd = reader.GetDateTime(reader.GetOrdinal("eindtijd"));
   }
-
  }
 }

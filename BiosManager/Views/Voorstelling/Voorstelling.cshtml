@@ -1,0 +1,50 @@
+﻿@model BiosManager.Helpers.BigViewModel
+@Styles.Render("~/Content/Site.css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/Scripts/Filter.js")
+@{
+	var film = Model.film;
+}
+@{
+ ViewBag.Title = "Voorstellingen";
+}
+
+<h2>Voorstellingen</h2>
+
+@using (Html.BeginForm())
+{
+ <input class="form-control" id="myInput" type="text" placeholder="Search here" />
+ <br />
+ <table id="myTable" style="width: 100%">
+  <thead>
+   <tr>
+    <th>Zaal</th>
+    <th>Start</th>
+    <th>Einde</th>
+   </tr>
+  </thead>
+  <tbody> 
+   @foreach (var item in Model.Voorstellings)
+   {
+   <tr>
+    <td>
+     @Html.DisplayFor(model => item.Zaal) &nbsp;
+    </td>
+    <td>
+     @Html.DisplayFor(model => item.Starttijd)&nbsp;
+    </td>
+    <td>
+     @Html.DisplayFor(model => item.Eindtijd)&nbsp;
+    </td>
+    <td>
+     @using (Html.BeginForm("Voorstelling", "Voorstelling", FormMethod.Post))
+	{
+     @Html.AntiForgeryToken()
+     <button>@Html.ActionLink("Reserveer", "Reservering", "Reservering", new { film, item }, null)</button>
+	}
+    </td>
+   </tr>
+   }
+  </tbody>
+ </table>
+}
