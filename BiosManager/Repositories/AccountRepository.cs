@@ -56,7 +56,7 @@ namespace BiosManager.Repositories
 
   public void UpdateAccount(Account account, string nieuwWachtwoord)
   {
-   this.context.Update(account, nieuwWachtwoord);
+   context.Update(account, nieuwWachtwoord);
   }
 
   public Account LoginAccount(Account account)
@@ -77,7 +77,7 @@ namespace BiosManager.Repositories
   {
    try
    {
-    Account accounts = (from acc in this.context.Select()
+    Account accounts = (from acc in context.Select()
 				    where acc.Email.Equals(account.Email)
 						&& acc.Wachtwoord.Equals(account.Wachtwoord)
 				    select acc).Single();
@@ -91,6 +91,23 @@ namespace BiosManager.Repositories
     }
    }
    return false;
+  }
+
+  public int LoginId(Account account)
+  {
+   try
+   {
+    Account accountId = (from acc in context.Select()
+					where acc.Email.Equals(account.Email)
+						 && acc.Wachtwoord.Equals(account.Wachtwoord)
+					select acc).Single();
+    return accountId.Id;
+   }
+   catch (Exception e)
+   {
+    Console.WriteLine(e);
+    throw;
+   }
   }
  }
 }

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using BiosManager.Database;
+using BiosManager.Models.Enums;
 
 namespace BiosManager.Models
 {
@@ -16,16 +17,15 @@ namespace BiosManager.Models
   public string Naam { get; set; }
   public string Beschrijving { get; set; }
   public string Genres { get; set; }
+  public List<FilmType> ListGenres { get; set; }
   public int Lengte { get; set; }
   public decimal Rating { get; set; }
   public Image Image { get; set; }
   public string Query { get; set; }
   public int Jaar { get; set; }
-  public IEnumerable<SelectListItem> ActionsList { get; set; }
 
   public Film()
   {
-   ActionsList = new List<SelectListItem>();
    Query = "SELECT * FROM dbo.film";
   }
 
@@ -33,7 +33,7 @@ namespace BiosManager.Models
   {
    Id = reader.GetInt32(reader.GetOrdinal("ID"));
    Naam = reader.GetString(reader.GetOrdinal("naam"));
-   Genres =  reader.GetString(reader.GetOrdinal("genre"));
+   Genres = reader.GetString(reader.GetOrdinal("genre"));
    Beschrijving = reader.GetString(reader.GetOrdinal("beschrijving"));
    Lengte = reader.GetInt32(reader.GetOrdinal("lengte"));
    Rating = reader.GetDecimal(reader.GetOrdinal("rating"));

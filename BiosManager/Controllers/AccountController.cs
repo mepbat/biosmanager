@@ -43,8 +43,10 @@ namespace BiosManager.Controllers
   {
    account.Wachtwoord = WachtwoordManager.Hash(account.Wachtwoord);
    account = accountRepository.LoginAccount(account);
+   int accId = accountRepository.LoginId(account);
    if (account != null)
    {
+    account.Id = accId;
     FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, account.Id.ToString(), DateTime.Now, DateTime.Now.AddHours(1), false, "", FormsAuthentication.FormsCookiePath);
     HttpCookie c = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket));
     HttpContext.Response.Cookies.Add(c);

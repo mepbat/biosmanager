@@ -4,18 +4,35 @@
 @Scripts.Render("~/Scripts/Filter.js")
 
 @{
- ViewBag.Title = "Films";
+ List<SelectListItem> filmList = new List<SelectListItem>();
+ foreach (var item in Model)
+ {
+  filmList.Add(new SelectListItem
+  {
+   Text = item.ListGenres.ToString(),
+  });
+ }
 }
-<!DOCTYPE HTML>
-<h2>Films</h2>
 
 @using (Html.BeginForm())
 {
  <input class="form-control" id="myInput" type="text" placeholder="Search here" />
  <br />
+
+ <div class="form-group dropdown">
+  <select class="form-control">
+   <option value="" disabled selected>Kies een genre</option>
+   @foreach (var item in filmList)
+   {
+   <option value="@item.Text">@item.Text</option>
+   }
+  </select>
+ </div>
+
  <table id="myTable" style="width: 100%">
   <thead>
    <tr>
+    d
     <th>Naam</th>
     <th>Jaar</th>
     <th>Genre</th>

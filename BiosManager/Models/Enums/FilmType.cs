@@ -5,7 +5,7 @@ using System.Web;
 
 namespace BiosManager.Models.Enums
 {
- public class Genres
+ public class FilmType
  {
   enum Genre
   {

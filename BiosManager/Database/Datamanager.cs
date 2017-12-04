@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BiosManager.Models;
+using BiosManager.Models.Enums;
 
 namespace BiosManager.Database
 {
@@ -14,6 +15,7 @@ namespace BiosManager.Database
   public static List<Stoel> StoelList;
   public static List<Voorstelling> VoorstellingList;
   public static List<Zaal> ZaalList;
+  public static List<FilmType> GenresList;
 
   public static void Initialize()
   {

@@ -189,7 +189,7 @@
     </Compile>
     <Compile Include="Helpers\BigViewModel.cs" />
     <Compile Include="Helpers\Imdb.cs" />
-    <Compile Include="Models\Enums\Genres.cs" />
+    <Compile Include="Models\Enums\FilmType.cs" />
     <Compile Include="Repositories\AccountRepository.cs" />
     <Compile Include="Repositories\FilmRepository.cs" />
     <Compile Include="Repositories\ReserveringRepository.cs" />

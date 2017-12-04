@@ -28,17 +28,6 @@ namespace BiosManager.Repositories
    return films;
   }
 
-  public void GetFiltered()
-  {
-   Film vm = new Film();
-   IEnumerable<Genre> actionTypes = Enum.GetValues(typeof(Genres)).Cast<Genre>();
-   vm.ActionsList = from action in actionTypes
-				select new SelectListItem
-				{
-				 Text = action.ToString(),
-				 Value = action.ToString()
-				};
-  }
 
   public Film SelectFilm(int id)
   {
