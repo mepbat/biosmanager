@@ -16,17 +16,8 @@ namespace BiosManager.Controllers
   [HttpGet]
   public ActionResult Reservering(Film film, Voorstelling voorstelling)
   {
-   try
-   {
     Reservering reservering = new Reservering { Film = film, Voorstelling = voorstelling };
     return View("Reservering", "Reservering", reservering);
-   }
-   catch (Exception e)
-   {
-    Console.WriteLine(e);
-    throw;
-   }
-   return View();
   }
 
   [HttpPost]

@@ -5,14 +5,11 @@ using System.Web;
 
 namespace BiosManager.Models.Enums
 {
- public class TicketSoorten
+ public enum TicketSoorten
  {
-  enum Tickets
-  {
-   Normaal,
-   Student,
-   Senior,
-   Abonnement
-  }
+  Normaal,
+  Student,
+  Senior,
+  Abonnement
  }
 }

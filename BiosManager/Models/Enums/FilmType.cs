@@ -5,22 +5,20 @@ using System.Web;
 
 namespace BiosManager.Models.Enums
 {
- public class FilmType
+ public enum FilmType
  {
-  enum Genre
-  {
-   Actie,
-   Avontuur,
-   Drama,
-   Fantasy,
-   Horror,
-   Komedie,
-   Misdaad,
-   Oorlog,
-   Sciencefiction,
-   Sport,
-   Thriller,
-   Western
-  }
+  Actie,
+  Avontuur,
+  Drama,
+  Fantasie,
+  Horror,
+  Comedie,
+  Misdaad,
+  Oorlog,
+  Sciencefiction,
+  Sport,
+  Thriller,
+  Western,
+  Romantiek
  }
 }

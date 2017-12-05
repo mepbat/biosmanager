@@ -21,14 +21,13 @@ namespace BiosManager.Controllers
   [ValidateAntiForgeryToken]
   public ActionResult Register(Account account)
   {
-   if (!accountRepository.ValidEmail(account.Email))
+   if (account == null)
    {
-    ViewBag.Message = "Please enter a valid emailaddress";
     return View();
    }
-   if (!accountRepository.ValidPassword(account.Wachtwoord))
+   if (!accountRepository.ValidEmail(account.Email) || !accountRepository.ValidPassword(account.Wachtwoord))
    {
-    ViewBag.Message2 = "Please enter a password with atleast 1 uppercase letter, 1 lowercase letter and 1 digit and has a lenght between 4 and 16 characters ";
+    ViewBag.Message = "Please enter a valid emailaddress and a password with atleast 1 uppercase letter, 1 lowercase letter and 1 digit and has a lenght between 4 and 16 characters";
     return View();
    }
    account.Wachtwoord = WachtwoordManager.Hash(account.Wachtwoord);
@@ -41,6 +40,10 @@ namespace BiosManager.Controllers
   [ValidateAntiForgeryToken]
   public ActionResult Login(Account account)
   {
+   if (account == null)
+   {
+    return View();
+   }
    account.Wachtwoord = WachtwoordManager.Hash(account.Wachtwoord);
    account = accountRepository.LoginAccount(account);
    int accId = accountRepository.LoginId(account);

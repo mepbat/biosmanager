@@ -8,6 +8,8 @@ using System.Web.Mvc;
 using System.Text.RegularExpressions;
 using System.Web.UI.WebControls.WebParts;
 using BiosManager.Context.MSSQL;
+using BiosManager.Database;
+using BiosManager.Helpers;
 using BiosManager.Models;
 using BiosManager.Models.Enums;
 using BiosManager.Repositories;
@@ -18,19 +20,24 @@ namespace BiosManager.Controllers
  public class FilmController : Controller
  {
   private FilmRepository filmRepository = new FilmRepository(new MssqlFilmContext());
+  private FilmsGenresBigViewModel model = new FilmsGenresBigViewModel();
+
   [HttpGet]
   public ActionResult Films()
   {
-   List<Film> filmList = Database.Database.RunQuery(new Film());
-   var model = filmList;
+   Datamanager.Initialize();
+   model.ListFilms = Datamanager.FilmList;
+   model.Genres = Datamanager.GenresList;
    return View(model);
   }
 
   [HttpPost]
   [ValidateAntiForgeryToken]
-  public ActionResult Films(Film film)
+  public ActionResult Films(FilmType genreId)
   {
-   return View();
+   List<Film> films = filmRepository.SelectFilmsMetGenre(genreId.ToString());
+   model.ListFilms = films;
+   return View(model);
   }
 
   [HttpGet]

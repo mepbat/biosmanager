@@ -17,17 +17,8 @@ namespace BiosManager.Controllers
   [HttpGet]
   public ActionResult Voorstelling(int filmId)
   {
-   try
-   {
     IEnumerable<Voorstelling> voorstellingList = voorstellingRepository.SelectVoorstellingen(filmId);
     return View(new BigViewModel { Voorstellings = voorstellingList });
-   }
-   catch (Exception e)
-   {
-    Console.WriteLine(e);
-    throw;
-   }
-   return View();
   }
 
   [HttpPost]

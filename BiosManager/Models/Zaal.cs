@@ -26,7 +26,6 @@ namespace BiosManager.Models
    Id = reader.GetInt32(reader.GetOrdinal("ID"));
    Nummer = reader.GetInt32(reader.GetOrdinal("nummer"));
    Grootte = reader.GetInt32(reader.GetOrdinal("grootte"));
-   Bezig = reader.GetBoolean(reader.GetOrdinal("bezig"));
   }
 
  }

@@ -8,10 +8,5 @@ namespace BiosManager.Controllers
 {
     public class StoelController : Controller
     {
-        // GET: Stoel
-        public ActionResult Index()
-        {
-            return View();
-        }
     }
 }

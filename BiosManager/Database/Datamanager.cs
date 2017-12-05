@@ -17,6 +17,7 @@ namespace BiosManager.Database
   public static List<Zaal> ZaalList;
   public static List<FilmType> GenresList;
 
+
   public static void Initialize()
   {
    AccList = Database.RunQuery(new Account());
@@ -25,6 +26,7 @@ namespace BiosManager.Database
    StoelList = Database.RunQuery(new Stoel());
    VoorstellingList = Database.RunQuery(new Voorstelling());
    ZaalList = Database.RunQuery(new Zaal());
+   GenresList = Enum.GetValues(typeof(FilmType)).Cast<FilmType>().ToList();
   }
  }
 }

@@ -8,10 +8,6 @@ namespace BiosManager.Controllers
 {
     public class ZaalController : Controller
     {
-        // GET: Zaal
-        public ActionResult Index()
-        {
-            return View();
-        }
+
     }
 }
