@@ -61,16 +61,19 @@ namespace BiosManager.Repositories
 
   public Account LoginAccount(Account account)
   {
-   IEnumerable<Account> accounts = from acc in context.Select()
-							where acc.Email.Equals(account.Email)
-								 && acc.Wachtwoord.Equals(account.Wachtwoord)
-							select acc;
-   foreach (var acc in accounts)
+   try
    {
-    return acc;
+    Account accounts = (from acc in context.Select()
+				    where acc.Email.Equals(account.Email)
+						&& acc.Wachtwoord.Equals(account.Wachtwoord)
+				    select acc).Single();
+    return accounts;
+   }
+   catch (InvalidOperationException)
+   {
+    return null;
 
    }
-   return accounts.First();
   }
 
   public bool CheckAdminAccount(Account account)

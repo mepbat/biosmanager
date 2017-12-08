@@ -42,11 +42,9 @@ namespace BiosManager.Repositories
   public List<Film> SelectFilmsMetGenre(string type)
   {
    List<Film> films = (from f in filmContext.Select()
-				   where f.Genres.Contains("%" + type + "%")
+				   where f.Genres.Contains(type)
 				   select f).ToList();
    return films;
   }
-
-
  }
 }

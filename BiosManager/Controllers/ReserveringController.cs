@@ -9,6 +9,7 @@ using BiosManager.Repositories;
 
 namespace BiosManager.Controllers
 {
+    [Authorize]
  public class ReserveringController : Controller
  {
   ReserveringRepository reserveringRepository = new ReserveringRepository(new MssqlReserveringContext());

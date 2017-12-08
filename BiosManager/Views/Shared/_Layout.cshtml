@@ -3,19 +3,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	@Scripts.Render("~/Content/Site.css")
- @Styles.Render("~/Content/Bootstrap/bootstrap.css")
-	<meta charset="utf-8" />
+    @Scripts.Render("~/Content/Site.css")
+    @Styles.Render("~/Content/Bootstrap/bootstrap.css")
+    <meta charset="utf-8" />
 </head>
 <body>
-<div class="banner">
-	<ul>
-		@Html.ActionLink("Home","Index","Home")
-		@Html.ActionLink("Films", "Films", "Film")
-		@Html.ActionLink("Login", "Login", "Account")
-		@Html.ActionLink("Register", "Register", "Account")
-	</ul>
-</div>
-@RenderBody()
- </body>
+    @if (HttpContext.Current.Response.Cookies["__RequestVerificationToken"].Value != null)
+    {
+        @Html.ActionLink("Home", "Index", "Home")
+        @Html.ActionLink("Films", "Films", "Film")
+        @Html.ActionLink("Logout", "Logout", "Home")
+    }
+    else
+    {
+    <div class="banner">
+        <ul>
+            @Html.ActionLink("Home", "Index", "Home")
+            @Html.ActionLink("Films", "Films", "Film")
+            @Html.ActionLink("Login", "Login", "Account")
+            @Html.ActionLink("Register", "Register", "Account")
+        </ul>
+    </div>
+    }
+
+
+    @RenderBody()
+</body>
 </html>

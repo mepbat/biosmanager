@@ -10,22 +10,23 @@ using BiosManager.Repositories;
 
 namespace BiosManager.Controllers
 {
- public class VoorstellingController : Controller
- {
-  private VoorstellingRepository voorstellingRepository = new VoorstellingRepository(new MssqlVoorstellingContext());
+    [Authorize]
+    public class VoorstellingController : Controller
+    {
+        private readonly VoorstellingRepository _voorstellingRepository = new VoorstellingRepository(new MssqlVoorstellingContext());
 
-  [HttpGet]
-  public ActionResult Voorstelling(int filmId)
-  {
-    IEnumerable<Voorstelling> voorstellingList = voorstellingRepository.SelectVoorstellingen(filmId);
-    return View(new BigViewModel { Voorstellings = voorstellingList });
-  }
+        [HttpGet]
+        public ActionResult Voorstelling(int filmId)
+        {
+            IEnumerable<Voorstelling> voorstellingList = _voorstellingRepository.SelectVoorstellingen(filmId);
+            return View(new BigViewModel { Voorstellings = voorstellingList });
+        }
 
-  [HttpPost]
-  public ActionResult Voorstelling(Voorstelling voorstelling)
-  {
-   return RedirectToAction("Reservering", "Reservering", voorstelling);
-  }
+        [HttpPost]
+        public ActionResult Voorstelling(Voorstelling voorstelling)
+        {
+            return RedirectToAction("Reservering", "Reservering", voorstelling);
+        }
 
- }
+    }
 }

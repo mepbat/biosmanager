@@ -17,49 +17,52 @@ using IMDb = IMDb_Scraper.IMDb;
 
 namespace BiosManager.Controllers
 {
- public class FilmController : Controller
- {
-  private FilmRepository filmRepository = new FilmRepository(new MssqlFilmContext());
-  private FilmsGenresBigViewModel model = new FilmsGenresBigViewModel();
+    [Authorize]
+    public class FilmController : Controller
+    {
+        private FilmRepository filmRepository = new FilmRepository(new MssqlFilmContext());
+        private FilmsGenresBigViewModel model = new FilmsGenresBigViewModel();
 
-  [HttpGet]
-  public ActionResult Films()
-  {
-   Datamanager.Initialize();
-   model.ListFilms = Datamanager.FilmList;
-   model.Genres = Datamanager.GenresList;
-   return View(model);
-  }
+        [HttpGet]
+        public ActionResult Films()
+        {
+            Datamanager.Initialize();
+            model.ListFilms = Datamanager.FilmList;
+            model.Genres = Datamanager.GenresList;
+            return View(model);
+        }
 
-  [HttpPost]
-  [ValidateAntiForgeryToken]
-  public ActionResult Films(FilmType genreId)
-  {
-   List<Film> films = filmRepository.SelectFilmsMetGenre(genreId.ToString());
-   model.ListFilms = films;
-   return View(model);
-  }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Films(string gekozentype)
+        {
+            List<Film> films = filmRepository.SelectFilmsMetGenre(gekozentype);
+            model.ListFilms = Datamanager.FilmList;
+            model.Genres = Datamanager.GenresList;
+            model.ListFilms = films;
+            return View(model);
+        }
 
-  [HttpGet]
-  public ActionResult Details(int id = 0)
-  {
-   try
-   {
-    Film film = filmRepository.SelectFilm(id);
-    Details(film);
-   }
-   catch (Exception e)
-   {
-    Console.WriteLine(e);
-    throw;
-   }
-   return View();
-  }
+        [HttpGet]
+        public ActionResult Details(int id = 0)
+        {
+            try
+            {
+                Film film = filmRepository.SelectFilm(id);
+                Details(film);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            return View();
+        }
 
-  [HttpPost]
-  public ActionResult Details(Film film)
-  {
-   return View("Details", film);
-  }
- }
+        [HttpPost]
+        public ActionResult Details(Film film)
+        {
+            return View("Details", film);
+        }
+    }
 }
