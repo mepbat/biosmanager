@@ -17,7 +17,7 @@ namespace BiosManager.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private AccountRepository accountRepository = new AccountRepository(new MssqlAccountContext());
+        private readonly AccountRepository _accountRepository = new AccountRepository(new MssqlAccountContext());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -27,14 +27,14 @@ namespace BiosManager.Controllers
             {
                 return View();
             }
-            if (!accountRepository.ValidEmail(account.Email) || !accountRepository.ValidPassword(account.Wachtwoord))
+            if (!_accountRepository.ValidEmail(account.Email) || !_accountRepository.ValidPassword(account.Wachtwoord))
             {
                 ViewBag.Message = "Please enter a valid emailaddress and a password with atleast 1 uppercase letter, 1 lowercase letter and 1 digit and has a lenght between 4 and 16 characters";
                 return View();
             }
             account.Wachtwoord = WachtwoordManager.Hash(account.Wachtwoord);
             account.Admin = false;
-            accountRepository.AddAccount(account);
+            _accountRepository.AddAccount(account);
             return View("Login");
         }
 
@@ -49,13 +49,14 @@ namespace BiosManager.Controllers
                 return View();
             }
             account.Wachtwoord = WachtwoordManager.Hash(account.Wachtwoord);
-            account = accountRepository.LoginAccount(account);
+            account = _accountRepository.LoginAccount(account);
             if (account != null)
             {
-                int accId = accountRepository.LoginId(account);
+                int accId = _accountRepository.LoginId(account);
                 account.Id = accId;
                 HttpCookie c = ticket.Encrypt(accId.ToString());
-                HttpContext.Response.Cookies.Add(c);
+                HttpContext.Response.SetCookie(c);
+              //  int decr = ticket.Decrypt();
                 return RedirectToAction("Films", "Film");
             }
             ViewBag.Message = "Incorrect email or password";

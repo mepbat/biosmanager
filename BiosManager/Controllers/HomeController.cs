@@ -25,6 +25,15 @@ namespace BiosManager.Controllers
 
         public ActionResult Logout()
         {
+            if (Request.Cookies["user"] != null)
+            {
+                var user = new HttpCookie("user")
+                {
+                    Expires = DateTime.Now.AddDays(-1),
+                    Value = null
+                };
+                Response.Cookies.Add(user);
+            }
             FormsAuthentication.SignOut();
             Session.Abandon();
             return RedirectToAction("Index");

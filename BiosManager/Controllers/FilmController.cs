@@ -20,8 +20,8 @@ namespace BiosManager.Controllers
     [Authorize]
     public class FilmController : Controller
     {
-        private FilmRepository filmRepository = new FilmRepository(new MssqlFilmContext());
-        private FilmsGenresBigViewModel model = new FilmsGenresBigViewModel();
+        private readonly FilmRepository _filmRepository = new FilmRepository(new MssqlFilmContext());
+        private readonly FilmsGenresBigViewModel model = new FilmsGenresBigViewModel();
 
         [HttpGet]
         public ActionResult Films()
@@ -36,7 +36,7 @@ namespace BiosManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Films(string gekozentype)
         {
-            List<Film> films = filmRepository.SelectFilmsMetGenre(gekozentype);
+            List<Film> films = _filmRepository.SelectFilmsMetGenre(gekozentype);
             model.ListFilms = Datamanager.FilmList;
             model.Genres = Datamanager.GenresList;
             model.ListFilms = films;
@@ -48,7 +48,7 @@ namespace BiosManager.Controllers
         {
             try
             {
-                Film film = filmRepository.SelectFilm(id);
+                Film film = _filmRepository.SelectFilm(id);
                 Details(film);
             }
             catch (Exception e)

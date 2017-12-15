@@ -7,8 +7,13 @@
     @Styles.Render("~/Content/Bootstrap/bootstrap.css")
     <meta charset="utf-8" />
 </head>
+@{
+    var userCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+}
+
+
 <body>
-    @if (HttpContext.Current.Response.Cookies["__RequestVerificationToken"].Value != null)
+    @if (userCookie != null && userCookie.Value != null)
     {
         @Html.ActionLink("Home", "Index", "Home")
         @Html.ActionLink("Films", "Films", "Film")
