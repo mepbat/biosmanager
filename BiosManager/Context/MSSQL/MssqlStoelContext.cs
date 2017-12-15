@@ -2,64 +2,64 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using BiosManager.Models;
 
 namespace BiosManager.Context.MSSQL
 {
- public class MssqlStoelContext : Database.Database, IStoelContext
- {
-  public void Insert(Stoel stoel)
-  {
-   using (SqlConnection conn = new SqlConnection(ConnectionString))
-   {
-    conn.Open();
+    public class MssqlStoelContext : Database.Database, IStoelContext
+    {
+        public void Update(Stoel stoel, bool bezet)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
 
-    string query = "INSERT INTO dbo.stoel (rij, nummer, bezet) VALUES (@rij, @nummer, @bezet)";
-    SqlCommand cmd = new SqlCommand(query, conn);
+                string query = "UPDATE dbo.stoel (bezet) SET (@bezet) WHERE id = (@id)";
+                SqlCommand cmd = new SqlCommand(query, conn);
 
-    cmd.Parameters.AddWithValue("@rij", stoel.Rij);
-    cmd.Parameters.AddWithValue("@nummer", stoel.Nummer);
-    cmd.Parameters.AddWithValue("@bezet", stoel.Bezet);
-    cmd.ExecuteNonQuery();
-    conn.Close();
-   }
-  }
+                cmd.Parameters.AddWithValue("@bezet", bezet);
+                cmd.Parameters.AddWithValue("@id", stoel.Id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
 
-  public List<Stoel> Select()
-  {
-   return Database.Database.RunQuery(new Stoel());
-  }
+        public List<Stoel> Select()
+        {
+            try
+            {
+                List<Stoel> stoelen = new List<Stoel>();
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    conn.Open();
 
-  public void Update(Stoel stoel, bool bezet)
-  {
-   using (SqlConnection conn = new SqlConnection(ConnectionString))
-   {
-    conn.Open();
+                    string query = "SELECT * FROM dbo.stoel";
+                    SqlCommand cmd = new SqlCommand(query, conn);
 
-    string query = "UPDATE dbo.stoel (bezet) SET (@bezet) WHERE id = (@id)";
-    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(reader.GetOrdinal("ID"));
+                        int rij = reader.GetInt32(reader.GetOrdinal("rij"));
+                        int nummer = reader.GetInt32(reader.GetOrdinal("nummer"));
+                        bool bezet = reader.GetBoolean(reader.GetOrdinal("bezet"));
+                        int ResID = reader.GetInt32(reader.GetOrdinal("reservering_ID"));
 
-    cmd.Parameters.AddWithValue("@bezet", bezet);
-    cmd.Parameters.AddWithValue("@id", stoel.Id);
-    cmd.ExecuteNonQuery();
-    conn.Close();
-   }
-  }
-
-  public void Delete(Stoel stoel)
-  {
-   using (SqlConnection conn = new SqlConnection(ConnectionString))
-   {
-    conn.Open();
-
-    string query = "DELETE FROM dbo.stoel WHERE id = (@id)";
-    SqlCommand cmd = new SqlCommand(query, conn);
-
-    cmd.Parameters.AddWithValue("@id", stoel.Id);
-    cmd.ExecuteNonQuery();
-    conn.Close();
-   }
-  }
- }
+                        Stoel s = new Stoel(id, rij, nummer, bezet);
+                        stoelen.Add(s);
+                    }
+                    conn.Close();
+                }
+                return stoelen;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new List<Stoel>();
+            }
+        }
+        
+    }
 }

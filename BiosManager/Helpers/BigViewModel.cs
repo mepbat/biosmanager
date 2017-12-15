@@ -10,6 +10,5 @@ namespace BiosManager.Helpers
  {
   public Film film { get; set; }
   public List<Voorstelling> voorstellingen { get; set; }
-  public IEnumerable<Voorstelling> Voorstellings { get; set; }
  }
 }

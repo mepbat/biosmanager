@@ -5,21 +5,22 @@ using BiosManager.Models;
 
 namespace BiosManager.Repositories
 {
- public class VoorstellingRepository
- {
-  private MssqlVoorstellingContext _voorstellingContext;
+    public class VoorstellingRepository
+    {
+        private readonly MssqlVoorstellingContext _voorstellingContext;
 
-  public VoorstellingRepository(MssqlVoorstellingContext voorstellingContext)
-  {
-   this._voorstellingContext = voorstellingContext;
-  }
 
-  public IEnumerable<Voorstelling> SelectVoorstellingen(int filmId)
-  {
-   IEnumerable<Voorstelling> voorstellingen = (from f in _voorstellingContext.Select()
-									  where f.FilmId.Equals(filmId)
-									  select f);
-   return voorstellingen;
-  }
- }
+        public VoorstellingRepository(MssqlVoorstellingContext voorstellingContext)
+        {
+            this._voorstellingContext = voorstellingContext;
+        }
+
+        public List<Voorstelling> SelectVoorstellingen(int filmId)
+        {
+            List<Voorstelling> voorstellingen = (from f in _voorstellingContext.Select()
+                                                 where f.Fl.Id.Equals(filmId)
+                                                 select f).ToList();
+            return voorstellingen;
+        }
+    }
 }

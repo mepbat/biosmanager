@@ -49,11 +49,6 @@ namespace BiosManager.Repositories
    this.context.Insert(account);
   }
 
-  public void DeleteAccount(Account account)
-  {
-   this.context.Delete(account);
-  }
-
   public void UpdateAccount(Account account, string nieuwWachtwoord)
   {
    context.Update(account, nieuwWachtwoord);

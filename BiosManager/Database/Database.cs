@@ -7,78 +7,14 @@ using BiosManager.Models;
 
 namespace BiosManager.Database
 {
- public class Database
- {
-
-  public static string ConnectionString { get; set; }
-  static Database()
-  {
-   ConnectionString = "Data Source=mssql.fhict.local;Initial Catalog = dbi383656; Persist Security Info=True;User ID = dbi383656; Password=wachtwoord123";
-  }
-
-  public static List<T> RunQuery<T>(T value) where T : IQuery, new()
-  {
-   SqlDataReader reader = null;
-   List<T> result = new List<T>();
-
-   using (SqlConnection con = new SqlConnection(ConnectionString))
-   {
-    using (SqlCommand cmd = con.CreateCommand())
+    public class Database
     {
-	cmd.CommandText = value.Query;
 
-	try
-	{
-	 cmd.Connection.Open();
-	 cmd.Prepare();
-	 reader = cmd.ExecuteReader();
+        public static string ConnectionString { get; set; }
 
-	 while (reader.Read())
-	 {
-	  T obj = new T();
-	  obj.Parse(reader);
-	  result.Add(obj);
-	 }
-	}
-	catch (SqlException e)
-	{
-	 Console.Write(e);
-	}
-	finally
-	{
-	 cmd.Connection.Close();
-	 reader?.Close();
-	}
-	return result;
+        static Database()
+        {
+            ConnectionString ="Data Source=mssql.fhict.local;Initial Catalog = dbi383656; Persist Security Info=True;User ID = dbi383656; Password=wachtwoord123";
+        }
     }
-   }
-  }
-
-  public static bool RunNonQuery(SqlCommand com)
-  {
-   using (SqlConnection con = new SqlConnection(ConnectionString))
-   {
-    using (SqlCommand cmd = com)
-    {
-	cmd.Connection = con;
-	try
-	{
-	 cmd.Connection.Open();
-	 cmd.ExecuteNonQuery();
-	 return true;
-	}
-	catch (SqlException e)
-	{
-	 Console.Write(e);
-	 return false;
-	}
-	finally
-	{
-	 cmd.Connection.Close();
-	 cmd.Dispose();
-	}
-    }
-   }
-  }
- }
 }

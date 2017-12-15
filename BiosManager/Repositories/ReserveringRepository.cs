@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Net.TMDb;
 using BiosManager.Context.MSSQL;
 using BiosManager.Models;
 
@@ -11,6 +13,9 @@ namespace BiosManager.Repositories
   {
    this._reserveringContext = reserveringContext;
   }
+
+
+
   public void AddTickets()
   {
 

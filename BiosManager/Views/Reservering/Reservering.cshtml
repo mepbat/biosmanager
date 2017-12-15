@@ -1,8 +1,36 @@
-﻿@model BiosManager.Models.Reservering
+﻿@using BiosManager.Models
+@model BiosManager.Models.Reservering
 @Styles.Render("~/Content/Site.css")
 
 @{
- ViewBag.Title = "Reservering";
+    ViewBag.Title = "Reservering";
 }
 
 <h2>Reservering</h2>
+
+
+@using (Html.BeginForm())
+{
+    <input class="form-control" id="myInput" type="text" placeholder="Search here" />
+    <br />
+    <table id="myTable" style="width: 100%">
+
+        <tbody>
+            @foreach (Stoel s in Model.Voorstelling.Zl.Stoelen)
+            {
+                <tr>
+                    <td>
+                        @Html.CheckBoxFor(model => s.Bezet) &nbsp;
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Reservering", "Reservering", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+}

@@ -24,11 +24,11 @@
    </tr>
   </thead>
   <tbody> 
-   @foreach (var item in Model.Voorstellings)
+   @foreach (var item in Model.voorstellingen)
    {
    <tr>
     <td>
-     @Html.DisplayFor(model => item.Zaal) &nbsp;
+     @Html.DisplayFor(model => item.Zl.Nummer) &nbsp;
     </td>
     <td>
      @Html.DisplayFor(model => item.Starttijd)&nbsp;

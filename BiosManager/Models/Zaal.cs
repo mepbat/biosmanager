@@ -7,26 +7,19 @@ using BiosManager.Database;
 
 namespace BiosManager.Models
 {
- public class Zaal : IQuery
- {
-  public int Id { get; set; }
-  public List<Stoel> Stoelen { get; set; }
-  public int Nummer { get; set; }
-  public int Grootte { get; set; }
-  public bool Bezig { get; set; }
-  public string Query { get; set; }
+    public class Zaal
+    {
+        public int Id { get; set; }
+        public List<Stoel> Stoelen { get; set; }
+        public int Nummer { get; set; }
+        public int Grootte { get; set; }
+        public bool Bezig { get; set; }
 
-  public Zaal()
-  {
-   Query = "SELECT * FROM dbo.zaal";
-  }
-
-  public void Parse(SqlDataReader reader)
-  {
-   Id = reader.GetInt32(reader.GetOrdinal("ID"));
-   Nummer = reader.GetInt32(reader.GetOrdinal("nummer"));
-   Grootte = reader.GetInt32(reader.GetOrdinal("grootte"));
-  }
-
- }
+        public Zaal(int id, int nummer, int grootte)
+        {
+            this.Id = id;
+            this.Nummer = nummer;
+            this.Grootte = grootte;
+        }
+    }
 }

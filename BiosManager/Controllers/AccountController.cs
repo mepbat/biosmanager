@@ -56,7 +56,6 @@ namespace BiosManager.Controllers
                 account.Id = accId;
                 HttpCookie c = ticket.Encrypt(accId.ToString());
                 HttpContext.Response.SetCookie(c);
-              //  int decr = ticket.Decrypt();
                 return RedirectToAction("Films", "Film");
             }
             ViewBag.Message = "Incorrect email or password";
