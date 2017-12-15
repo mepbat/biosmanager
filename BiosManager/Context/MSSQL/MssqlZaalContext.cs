@@ -7,43 +7,44 @@ using BiosManager.Models;
 
 namespace BiosManager.Context.MSSQL
 {
- public class MssqlZaalContext : Database.Database, IZaalContext
- {
-  public void Insert(Zaal zaal)
-  {
-   using (SqlConnection conn = new SqlConnection(ConnectionString))
-   {
-    conn.Open();
+    public class MssqlZaalContext : Database.Database, IZaalContext
+    {
+        public List<Zaal> Select()
+        {
+            try
+            {
 
-    string query = "INSERT INTO dbo.zaal (nummer, grootte) VALUES (@nummer, @grootte)";
-    SqlCommand cmd = new SqlCommand(query, conn);
+                using (SqlConnection conn = new SqlConnection(ConnectionString))
+                {
+                    List<Zaal> zalen = new List<Zaal>();
+                    conn.Open();
+                    string query = "SELECT * FROM dbo.zaal";
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        int id = reader.GetInt32(reader.GetOrdinal("ID"));
+                        int nummer = reader.GetInt32(reader.GetOrdinal("nummer"));
+                        int grootte = reader.GetInt32(reader.GetOrdinal("grootte"));
 
-    cmd.Parameters.AddWithValue("@email", zaal.Nummer);
-    cmd.Parameters.AddWithValue("@wachtwoord", zaal.Grootte);
-    cmd.ExecuteNonQuery();
-    conn.Close();
-   }
+                        Zaal z = new Zaal
+                        {
+                            Id = id,
+                            Nummer = nummer,
+                            Grootte = grootte
+                        };
+                        zalen.Add(z);
+                    }
+                    conn.Close();
+                    return zalen;
+                }
+            }
 
-  }
-
-  public List<Zaal> Select()
-  {
-   return Database.Database.RunQuery(new Zaal());
-  }
-
-  public void Delete(Zaal zaal)
-  {
-   using (SqlConnection conn = new SqlConnection(ConnectionString))
-   {
-    conn.Open();
-
-    string query = "DELETE FROM dbo.zaal WHERE id = (@id)";
-    SqlCommand cmd = new SqlCommand(query, conn);
-
-    cmd.Parameters.AddWithValue("@id", zaal.Id);
-    cmd.ExecuteNonQuery();
-    conn.Close();
-   }
-  }
- }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new List<Zaal>();
+            }
+        }
+    }
 }

@@ -182,8 +182,6 @@
     <Compile Include="Controllers\VoorstellingController.cs" />
     <Compile Include="Controllers\ZaalController.cs" />
     <Compile Include="Database\Database.cs" />
-    <Compile Include="Database\Datamanager.cs" />
-    <Compile Include="Database\IQuery.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

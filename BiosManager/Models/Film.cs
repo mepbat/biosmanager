@@ -11,7 +11,7 @@ using BiosManager.Models.Enums;
 
 namespace BiosManager.Models
 {
- public class Film : IQuery
+ public class Film
  {
   public int Id { get; set; }
   public string Naam { get; set; }
@@ -21,22 +21,6 @@ namespace BiosManager.Models
   public int Lengte { get; set; }
   public decimal Rating { get; set; }
   public Image Image { get; set; }
-  public string Query { get; set; }
   public int Jaar { get; set; }
-
-  public Film()
-  {
-   Query = "SELECT * FROM dbo.film";
-  }
-
-  public void Parse(SqlDataReader reader)
-  {
-   Id = reader.GetInt32(reader.GetOrdinal("ID"));
-   Naam = reader.GetString(reader.GetOrdinal("naam"));
-   Genres = reader.GetString(reader.GetOrdinal("genre"));
-   Beschrijving = reader.GetString(reader.GetOrdinal("beschrijving"));
-   Lengte = reader.GetInt32(reader.GetOrdinal("lengte"));
-   Rating = reader.GetDecimal(reader.GetOrdinal("rating"));
-  }
  }
 }

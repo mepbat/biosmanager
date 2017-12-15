@@ -21,15 +21,14 @@ namespace BiosManager.Controllers
     public class FilmController : Controller
     {
         private readonly FilmRepository _filmRepository = new FilmRepository(new MssqlFilmContext());
-        private readonly FilmsGenresBigViewModel model = new FilmsGenresBigViewModel();
+        private readonly FilmsGenresBigViewModel _model = new FilmsGenresBigViewModel();
 
         [HttpGet]
         public ActionResult Films()
         {
-            Datamanager.Initialize();
-            model.ListFilms = Datamanager.FilmList;
-            model.Genres = Datamanager.GenresList;
-            return View(model);
+            _model.ListFilms =_filmRepository.GetAllFilms();
+            _model.Genres = _filmRepository.GetAllGenres();
+            return View(_model);
         }
 
         [HttpPost]
@@ -37,10 +36,9 @@ namespace BiosManager.Controllers
         public ActionResult Films(string gekozentype)
         {
             List<Film> films = _filmRepository.SelectFilmsMetGenre(gekozentype);
-            model.ListFilms = Datamanager.FilmList;
-            model.Genres = Datamanager.GenresList;
-            model.ListFilms = films;
-            return View(model);
+            _model.Genres = _filmRepository.GetAllGenres();
+            _model.ListFilms = films;
+            return View(_model);
         }
 
         [HttpGet]

@@ -7,11 +7,10 @@ using BiosManager.Models;
 
 namespace BiosManager.Context
 {
-	public interface IAccountContext
- {
-  void Insert(Account account);
-  List<Account> Select();
-  void Update(Account account, string nieuwWachtwoord);
-  void Delete(Account account);
- }
+    public interface IAccountContext
+    {
+        void Insert(Account account);
+        List<Account> Select();
+        void Update(Account account, string nieuwWachtwoord);
+    }
 }
