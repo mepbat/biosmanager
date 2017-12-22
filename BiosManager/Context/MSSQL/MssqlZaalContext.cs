@@ -28,6 +28,7 @@ namespace BiosManager.Context.MSSQL
                         int grootte = reader.GetInt32(reader.GetOrdinal("grootte"));
 
                         Zaal z = new Zaal(id, nummer, grootte);
+
                         zalen.Add(z);
                     }
                     conn.Close();

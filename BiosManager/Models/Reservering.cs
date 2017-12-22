@@ -24,6 +24,7 @@ namespace BiosManager.Models
             this.Voorstelling = v;
             this.Acc = acc;
         }
+
         public Reservering(Voorstelling v, Account acc)
         {
             this.Voorstelling = v;

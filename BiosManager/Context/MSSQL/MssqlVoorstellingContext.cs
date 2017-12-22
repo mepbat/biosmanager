@@ -50,6 +50,7 @@ namespace BiosManager.Context.MSSQL
                     {
                         int id = reader.GetInt32(reader.GetOrdinal("ID"));
                         int zaalId = reader.GetInt32(reader.GetOrdinal("zaal_ID"));
+                        int zaalNummer = reader.GetInt32(reader.GetOrdinal("zaal_ID"));
                         int filmId = reader.GetInt32(reader.GetOrdinal("film_ID"));
                         DateTime starttijd = reader.GetDateTime(reader.GetOrdinal("begintijd"));
                         DateTime eindtijd = reader.GetDateTime(reader.GetOrdinal("eindtijd"));
@@ -64,15 +65,10 @@ namespace BiosManager.Context.MSSQL
                         decimal rating = reader.GetDecimal(reader.GetOrdinal("rating"));
                         int jaar = reader.GetInt32(reader.GetOrdinal("jaar"));
 
-                        int rij = reader.GetInt32(reader.GetOrdinal("rij"));
-                        int stoelnummer = reader.GetInt32(reader.GetOrdinal("stoelnummer"));
-                        bool bezet = reader.GetBoolean(reader.GetOrdinal("bezet"));
-
-                        Stoel s = new Stoel(rij, stoelnummer, bezet);
                         Zaal z = new Zaal(zaalId, nummer, grootte);
                         Film f = new Film(filmId, naam, beschrijving, genres, lengte, rating, jaar);
-                        Voorstelling v = new Voorstelling(id, z, f, starttijd, eindtijd);
 
+                        Voorstelling v = new Voorstelling(id, z, f, starttijd, eindtijd);
                         voorstellingen.Add(v);
                     }
                     conn.Close();
@@ -93,7 +89,8 @@ namespace BiosManager.Context.MSSQL
             {
                 conn.Open();
                 string query = "DELETE FROM dbo.voorstelling WHERE id = (@id)";
-                SqlCommand cmd = new SqlCommand(query, conn);
+
+                SqlCommand cmd = new SqlCommand(query,conn);
 
                 cmd.Parameters.AddWithValue("@id", voorstelling.Id);
                 cmd.ExecuteNonQuery();
