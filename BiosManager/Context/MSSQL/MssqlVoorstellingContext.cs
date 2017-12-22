@@ -43,14 +43,13 @@ namespace BiosManager.Context.MSSQL
                 {
                     List<Voorstelling> voorstellingen = new List<Voorstelling>();
                     conn.Open();
-                    string query = "SELECT * FROM dbo.voorstelling INNER JOIN dbo.zaal ON voorstelling.zaal_ID = zaal.ID INNER JOIN dbo.film ON voorstelling.film_ID = film.ID INNER JOIN dbo.stoel ON zaal.ID = stoel.zaal_ID";
+                    string query = "SELECT * FROM dbo.voorstelling INNER JOIN dbo.zaal ON voorstelling.zaal_ID = zaal.ID INNER JOIN dbo.film ON voorstelling.film_ID = film.ID";
                     SqlCommand cmd = new SqlCommand(query, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
                         int id = reader.GetInt32(reader.GetOrdinal("ID"));
                         int zaalId = reader.GetInt32(reader.GetOrdinal("zaal_ID"));
-                        int zaalNummer = reader.GetInt32(reader.GetOrdinal("zaal_ID"));
                         int filmId = reader.GetInt32(reader.GetOrdinal("film_ID"));
                         DateTime starttijd = reader.GetDateTime(reader.GetOrdinal("begintijd"));
                         DateTime eindtijd = reader.GetDateTime(reader.GetOrdinal("eindtijd"));
@@ -67,8 +66,8 @@ namespace BiosManager.Context.MSSQL
 
                         Zaal z = new Zaal(zaalId, nummer, grootte);
                         Film f = new Film(filmId, naam, beschrijving, genres, lengte, rating, jaar);
-
                         Voorstelling v = new Voorstelling(id, z, f, starttijd, eindtijd);
+
                         voorstellingen.Add(v);
                     }
                     conn.Close();
@@ -89,8 +88,7 @@ namespace BiosManager.Context.MSSQL
             {
                 conn.Open();
                 string query = "DELETE FROM dbo.voorstelling WHERE id = (@id)";
-
-                SqlCommand cmd = new SqlCommand(query,conn);
+                SqlCommand cmd = new SqlCommand(query, conn);
 
                 cmd.Parameters.AddWithValue("@id", voorstelling.Id);
                 cmd.ExecuteNonQuery();

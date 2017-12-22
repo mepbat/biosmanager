@@ -60,6 +60,6 @@ namespace BiosManager.Context.MSSQL
                 return new List<Stoel>();
             }
         }
-
+        
     }
 }

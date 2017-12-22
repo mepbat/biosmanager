@@ -51,6 +51,7 @@ namespace BiosManager.Context.MSSQL
                         int jaar = reader.GetInt32(reader.GetOrdinal("jaar"));
 
                         Film f = new Film(id, naam, beschrijving, genres, lengte, rating, jaar);
+
                         films.Add(f);
                     }
                     conn.Close();

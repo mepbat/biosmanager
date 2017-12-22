@@ -36,7 +36,7 @@ namespace BiosManager.Controllers
         public ActionResult Films(string gekozentype)
         {
             _model.Genres = _filmRepository.GetAllGenres();
-            _model.ListFilms = _filmRepository.SelectFilmsMetGenre(gekozentype); ;
+            _model.ListFilms = _filmRepository.SelectFilmsMetGenre(gekozentype);
             return View(_model);
         }
 
