@@ -32,20 +32,7 @@ namespace BiosManager.Context.MSSQL
             {
                 Console.WriteLine(e);
             }
-        }
 
-        public void Update(Account account, string nieuwWachtwoord)
-        {
-            using (SqlConnection conn = new SqlConnection(ConnectionString))
-            {
-                conn.Open();
-                string query = "UPDATE dbo.account (wachtwoord) SET (@nieuwwachtwoord) WHERE id = (@id)";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@nieuwwachtwoord", nieuwWachtwoord);
-                cmd.Parameters.AddWithValue("@id", account.Id);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-            }
         }
 
         public List<Account> Select()
@@ -86,7 +73,20 @@ namespace BiosManager.Context.MSSQL
                 Console.WriteLine(e);
                 return new List<Account>();
             }
+        }
 
+        public void Update(Account account, string nieuwWachtwoord)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                string query = "UPDATE dbo.account (wachtwoord) SET (@nieuwwachtwoord) WHERE id = (@id)";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@nieuwwachtwoord", nieuwWachtwoord);
+                cmd.Parameters.AddWithValue("@id", account.Id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
         }
     }
 }

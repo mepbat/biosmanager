@@ -16,11 +16,14 @@ namespace BiosManager.Context.MSSQL
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
+
                 string query = "INSERT INTO dbo.reservering (Stoel_ID, datum, prijs) VALUES (@stoel, @datum, @prijs)";
                 SqlCommand cmd = new SqlCommand(query, conn);
+
                 cmd.Parameters.AddWithValue("@stoel", reservering.Stoelen);
                 cmd.Parameters.AddWithValue("@datum", reservering.Voorstelling.Starttijd);
                 cmd.Parameters.AddWithValue("@prijs", reservering.Prijs);
+
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
@@ -34,7 +37,7 @@ namespace BiosManager.Context.MSSQL
                 {
                     List<Reservering> reserveringen = new List<Reservering>();
                     conn.Open();
-                    string query = "SELECT * FROM dbo.reservering INNER JOIN dbo.account";
+                    string query = "SELECT * FROM dbo.reservering";
                     SqlCommand cmd = new SqlCommand(query, conn);
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())

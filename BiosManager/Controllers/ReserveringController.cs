@@ -13,7 +13,7 @@ namespace BiosManager.Controllers
     [Authorize]
     public class ReserveringController : Controller
     {
-        ReserveringRepository reserveringRepository = new ReserveringRepository(new MssqlReserveringContext());
+        ReserveringRepository _reserveringRepository = new ReserveringRepository(new MssqlReserveringContext());
 
         [HttpGet]
         public ActionResult Reservering(Voorstelling voorstelling)
