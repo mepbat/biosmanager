@@ -64,6 +64,11 @@ namespace BiosManager.Context.MSSQL
                         decimal rating = reader.GetDecimal(reader.GetOrdinal("rating"));
                         int jaar = reader.GetInt32(reader.GetOrdinal("jaar"));
 
+                        int rij = reader.GetInt32(reader.GetOrdinal("rij"));
+                        int stoelnummer = reader.GetInt32(reader.GetOrdinal("stoelnummer"));
+                        bool bezet = reader.GetBoolean(reader.GetOrdinal("bezet"));
+
+                        Stoel s = new Stoel(rij, stoelnummer, bezet);
                         Zaal z = new Zaal(zaalId, nummer, grootte);
                         Film f = new Film(filmId, naam, beschrijving, genres, lengte, rating, jaar);
                         Voorstelling v = new Voorstelling(id, z, f, starttijd, eindtijd);
