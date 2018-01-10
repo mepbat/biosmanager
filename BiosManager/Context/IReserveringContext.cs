@@ -10,7 +10,7 @@ namespace BiosManager.Context
  public interface IReserveringContext
  {
 	 void Insert(Reservering reservering);
-	 List<Reservering> Select();
+	 List<Reservering> Select(Account acc);
 	 void Delete(Reservering reservering);
  }
 }

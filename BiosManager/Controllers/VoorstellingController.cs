@@ -14,19 +14,20 @@ namespace BiosManager.Controllers
     public class VoorstellingController : Controller
     {
         private readonly VoorstellingRepository _voorstellingRepository = new VoorstellingRepository(new MssqlVoorstellingContext());
-        private readonly BigViewModel _viewModel = new BigViewModel();
 
         [HttpGet]
         public ActionResult Voorstelling(int filmId)
         {
-            _viewModel.voorstellingen = _voorstellingRepository.SelectVoorstellingen(filmId);
-            return View(_viewModel);
+            List<Voorstelling> voorstellingList = new List<Voorstelling>();
+            voorstellingList = _voorstellingRepository.SelectVoorstellingen(filmId);
+            return View(voorstellingList);
         }
 
-        [HttpPost]
-        public ActionResult Voorstelling(Voorstelling voorstelling)
+        [HttpGet]
+        public ActionResult MaakRes(int voorstellingId)
         {
-            return RedirectToAction("Reservering", "Reservering", voorstelling);
+            Voorstelling voor = _voorstellingRepository.GetById(voorstellingId);
+            return RedirectToAction("Reservering", "Reservering", voor);
         }
 
     }

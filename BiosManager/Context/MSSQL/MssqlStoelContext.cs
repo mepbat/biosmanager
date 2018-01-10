@@ -10,55 +10,47 @@ namespace BiosManager.Context.MSSQL
 {
     public class MssqlStoelContext : Database.Database, IStoelContext
     {
-        public void Update(Stoel stoel, bool bezet)
+        public void Update(Stoel stoel, int resId)
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
-
-                string query = "UPDATE dbo.stoel (bezet) SET (@bezet) WHERE id = (@id)";
+                string query = "UPDATE dbo.stoel (reservering_ID, bezet) SET (@resId, @bezet) WHERE id = (@id)";
                 SqlCommand cmd = new SqlCommand(query, conn);
-
-                cmd.Parameters.AddWithValue("@bezet", bezet);
+                cmd.Parameters.AddWithValue("@resId", resId);
+                cmd.Parameters.AddWithValue("@bezet", stoel.Bezet);
                 cmd.Parameters.AddWithValue("@id", stoel.Id);
                 cmd.ExecuteNonQuery();
                 conn.Close();
             }
         }
 
-        public List<Stoel> Select()
+        public List<Stoel> GetByZaalId(int id)
         {
-            try
+            List<Stoel> stoelen = new List<Stoel>();
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
-                List<Stoel> stoelen = new List<Stoel>();
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
+
+                conn.Open();
+
+                string query = "SELECT * FROM dbo.stoel WHERE Zaal_ID = @id";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("id", id);
+                SqlDataReader reader = cmd.ExecuteReader();
+                Stoel s = new Stoel();
+                while (reader.Read())
                 {
-                    conn.Open();
-
-                    string query = "SELECT * FROM dbo.stoel";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        int id = reader.GetInt32(reader.GetOrdinal("ID"));
-                        int rij = reader.GetInt32(reader.GetOrdinal("rij"));
-                        int nummer = reader.GetInt32(reader.GetOrdinal("nummer"));
-                        bool bezet = reader.GetBoolean(reader.GetOrdinal("bezet"));
-                        int ResID = reader.GetInt32(reader.GetOrdinal("reservering_ID"));
-
-                        Stoel s = new Stoel(id, rij, nummer, bezet);
-                        stoelen.Add(s);
-                    }
-                    conn.Close();
+                    s.Id = reader.GetInt32(reader.GetOrdinal("ID"));
+                    s.Rij = reader.GetInt32(reader.GetOrdinal("rij"));
+                    s.StoelNummer = reader.GetInt32(reader.GetOrdinal("stoelnummer"));
+                    s.Bezet = reader.GetBoolean(reader.GetOrdinal("bezet"));
+                    stoelen.Add(s);
                 }
-                return stoelen;
+                conn.Close();
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                return new List<Stoel>();
-            }
+            return stoelen;
+
+
         }
         
     }

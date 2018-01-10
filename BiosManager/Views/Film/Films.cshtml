@@ -55,7 +55,7 @@
      @Html.DisplayFor(model => item.Rating)&nbsp;
     </td>
     <td>
-     @using (Html.BeginForm("Films", "Film", FormMethod.Post))
+     @using (Html.BeginForm("Films", "Film", FormMethod.Get))
 	{
       <button>@Html.ActionLink("Details", "Details", "Film", new { id = item.Id }, null)</button>
 	}

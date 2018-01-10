@@ -12,5 +12,6 @@ namespace BiosManager.Context
   void Insert(Voorstelling voorstelling);
   List<Voorstelling> Select();
   void Delete(Voorstelling voorstelling);
+     Voorstelling GetById(int id);
  }
 }

@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using BiosManager.Models;
+using BiosManager.Repositories;
 
 namespace BiosManager.Context.MSSQL
 {
@@ -82,12 +83,38 @@ namespace BiosManager.Context.MSSQL
             }
         }
 
+        public Voorstelling GetById(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                FilmRepository FRep = new FilmRepository(new MssqlFilmContext());
+                ZaalRepository ZRep = new ZaalRepository(new MssqlZaalContext());
+                conn.Open();
+                string query = "SELECT * FROM dbo.voorstelling WHERE ID = @id";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("ID", id);
+                SqlDataReader reader = cmd.ExecuteReader();
+                Voorstelling voor = new Voorstelling();
+                while (reader.Read())
+                {
+                    voor.Id = reader.GetInt32(reader.GetOrdinal("ID"));
+                    voor.Starttijd = reader.GetDateTime(reader.GetOrdinal("begintijd"));
+                    voor.Eindtijd = reader.GetDateTime(reader.GetOrdinal("eindtijd"));
+                    voor.Zl = ZRep.GetById(reader.GetInt32(reader.GetOrdinal("Zaal_ID")));
+                    voor.Fl = FRep.GetById(reader.GetInt32(reader.GetOrdinal("Film_ID")));
+                }
+                conn.Close();
+                return voor;
+            }
+        }
+
         public void Delete(Voorstelling voorstelling)
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 conn.Open();
-                string query = "DELETE FROM dbo.voorstelling WHERE id = (@id)";
+                string query = "DELETE FROM dbo.voorstelling WHERE ID = (@id)";
                 SqlCommand cmd = new SqlCommand(query, conn);
 
                 cmd.Parameters.AddWithValue("@id", voorstelling.Id);

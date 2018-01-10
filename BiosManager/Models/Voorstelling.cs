@@ -15,6 +15,10 @@ namespace BiosManager.Models
         public DateTime Starttijd { get; set; }
         public DateTime Eindtijd { get; set; }
 
+        public Voorstelling()
+        {
+            
+        }
         public Voorstelling(int id, Zaal z, Film f, DateTime starttijd, DateTime eindtijd)
         {
             this.Id = id;

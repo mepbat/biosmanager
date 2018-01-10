@@ -12,5 +12,6 @@ namespace BiosManager.Context
   void Insert(Film film);
   List<Film> Select();
   void Delete(Film film);
+     Film GetById(int id);
  }
 }

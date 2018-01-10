@@ -50,5 +50,10 @@ namespace BiosManager.Repositories
                                 select f).ToList();
             return films;
         }
+
+        public Film GetById(int id)
+        {
+            return filmContext.GetById(id);
+        }
     }
 }

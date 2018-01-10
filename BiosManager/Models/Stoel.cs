@@ -15,6 +15,10 @@ namespace BiosManager.Models
         public int StoelNummer { get; set; }
         public bool Bezet { get; set; }
 
+        public Stoel()
+        {
+            
+        }
         public Stoel(int id, int rij, int stoelNummer, bool bezet)
         {
             this.Id = id;

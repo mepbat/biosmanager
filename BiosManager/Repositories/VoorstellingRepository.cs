@@ -22,5 +22,10 @@ namespace BiosManager.Repositories
                                                  select f).ToList();
             return voorstellingen;
         }
+
+        public Voorstelling GetById(int id)
+        {
+            return _voorstellingContext.GetById(id);
+        }
     }
 }

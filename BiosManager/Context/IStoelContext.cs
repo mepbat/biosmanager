@@ -9,7 +9,7 @@ namespace BiosManager.Context
 {
     public interface IStoelContext
     {
-        List<Stoel> Select();
-        void Update(Stoel stoel, bool bezet);
+        void Update(Stoel stoel, int resId);
+        List<Stoel> GetByZaalId(int id);
     }
 }

@@ -66,6 +66,32 @@ namespace BiosManager.Context.MSSQL
             }
         }
 
+        public Film GetById(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                conn.Open();
+                string query = "SELECT * FROM dbo.film WHERE ID = @ID";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("ID", id);
+                SqlDataReader reader = cmd.ExecuteReader();
+                Film f = new Film();
+                while (reader.Read())
+                {
+                    f.Naam = reader.GetString(reader.GetOrdinal("naam"));
+                    f.Genres = reader.GetString(reader.GetOrdinal("genre"));
+                    f.Beschrijving = reader.GetString(reader.GetOrdinal("beschrijving"));
+                    f.Lengte = reader.GetInt32(reader.GetOrdinal("lengte"));
+                    f.Rating = reader.GetDecimal(reader.GetOrdinal("rating"));
+                    f.Jaar = reader.GetInt32(reader.GetOrdinal("jaar"));
+                    f.Id = id;
+                }
+                conn.Close();
+                return f;
+            }
+        }
+
         public void Delete(Film film)
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))

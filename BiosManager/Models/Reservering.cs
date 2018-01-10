@@ -18,6 +18,14 @@ namespace BiosManager.Models
         public Account Acc { get; set; }
         public Voorstelling Voorstelling { get; set; }
 
+        public Reservering()
+        {
+            
+        }
+        public Reservering(int id)
+        {
+            this.Id = id;
+        }
         public Reservering(int id, Voorstelling v, Account acc)
         {
             this.Id = id;

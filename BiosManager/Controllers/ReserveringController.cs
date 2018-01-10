@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using BiosManager.Context.MSSQL;
+using BiosManager.Helpers;
 using BiosManager.Models;
 using BiosManager.Repositories;
 
@@ -14,13 +15,17 @@ namespace BiosManager.Controllers
     public class ReserveringController : Controller
     {
         ReserveringRepository _reserveringRepository = new ReserveringRepository(new MssqlReserveringContext());
+        VoorstellingRepository _voorstellingRepository = new VoorstellingRepository(new MssqlVoorstellingContext());
 
         [HttpGet]
-        public ActionResult Reservering(Voorstelling voorstelling)
+        public ActionResult Reservering(Voorstelling voor)
         {
-            Account acc = new Account {Id = Convert.ToInt32(Request.Cookies[FormsAuthentication.FormsCookieName])};
-            Reservering res = new Reservering(voorstelling, acc);
-            return View("Reservering", "Reservering",res);
+            Voorstelling voorst = _voorstellingRepository.GetById(voor.Id);
+            Account acc = new Account();
+            TicketAuth auth = new TicketAuth();
+            acc.Id = Convert.ToInt32(auth.Decrypt());
+            Reservering res = new Reservering(voorst, acc);
+            return View("Reservering", "Reservering", res);
         }
 
         [HttpPost]

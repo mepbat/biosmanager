@@ -10,5 +10,6 @@ namespace BiosManager.Context
  public interface IZaalContext
  {
   List<Zaal> Select();
+     Zaal GetById(int id);
  }
 }

@@ -1,10 +1,8 @@
-﻿@model BiosManager.Helpers.BigViewModel
+﻿@model List<BiosManager.Models.Voorstelling>
 @Styles.Render("~/Content/Site.css")
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/Scripts/Filter.js")
-@{
-	var film = Model.film;
-}
+
 @{
  ViewBag.Title = "Voorstellingen";
 }
@@ -24,7 +22,7 @@
    </tr>
   </thead>
   <tbody> 
-   @foreach (var item in Model.voorstellingen)
+   @foreach (var item in Model)
    {
    <tr>
     <td>
@@ -37,10 +35,9 @@
      @Html.DisplayFor(model => item.Eindtijd)&nbsp;
     </td>
     <td>
-     @using (Html.BeginForm("Voorstelling", "Voorstelling", FormMethod.Post))
+     @using (Html.BeginForm("MaakRes", "Voorstelling", FormMethod.Get))
 	{
-     @Html.AntiForgeryToken()
-     <button>@Html.ActionLink("Reserveer", "Reservering", "Reservering", new { film, item }, null)</button>
+     <button>@Html.ActionLink("Reserveer", "MaakRes", "Voorstelling", new { voorstellingId = item.Id }, null)</button>
 	}
     </td>
    </tr>

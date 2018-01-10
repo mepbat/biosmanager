@@ -24,6 +24,10 @@ namespace BiosManager.Models
         public Image Image { get; set; }
         public int Jaar { get; set; }
 
+        public Film()
+        {
+            
+        }
         public Film(int id, string naam, string beschrijving, string genres, int lengte, decimal rating, int jaar)
         {
             this.Id = id;
